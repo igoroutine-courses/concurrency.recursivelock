@@ -1,0 +1,58 @@
+run:
+  concurrency: 8
+  issues-exit-code: 1
+  tests: true
+
+linters-settings:
+  revive:
+    severity: error
+    confidence: 0.1
+    rules:
+      - name: comment-spacings
+        severity: warning
+        disabled: false
+        exclude: [ "" ]
+        arguments:
+          - mypragma
+          - otherpragma
+      - name: exported
+        arguments:
+          - checkPrivateReceivers
+  depguard:
+    rules:
+      main:
+        list-mode: original
+        files:
+          - $all
+        allow:
+          - sync/atomic
+          - log
+          - fmt
+          - io
+          - runtime
+          - math
+          - strconv
+          - strings
+          - errors
+          - github.com/igoroutine-courses/concurrency.reentrantlock/internal/reentrant
+          - github.com/petermattis/goid
+          - iter
+
+linters:
+  enable:
+    - depguard
+    - revive
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - revive
+
+issues:
+  exclude-files:
+    - lock_test.go
+    - config_test.go
+  exclude-use-default: true
+  max-issues-per-linter: 0
