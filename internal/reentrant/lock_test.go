@@ -11,13 +11,21 @@ import (
 
 var _ sync.Locker = (*Mutex)(nil)
 
-func TestMutexDoubleLock(t *testing.T) {
+func TestMutexRecursive(t *testing.T) {
 	t.Parallel()
 
 	mx := New()
 
 	mx.Lock()
 	mx.Lock()
+	mx.Lock()
+	mx.Lock()
+	mx.Lock()
+
+	mx.Unlock()
+	mx.Unlock()
+	mx.Unlock()
+	mx.Unlock()
 	mx.Unlock()
 }
 
